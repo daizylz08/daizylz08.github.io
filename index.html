@@ -1,121 +1,154 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Daizylz</title>
-  <script src="https://w.soundcloud.com/player/api.js"></script>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daizylz</title>
+<style>
     body {
-      margin: 0;
-      font-family: monospace;
-      background: black;
-      color: white;
-      overflow: hidden;
-    }
-
-    .card {
-      position: relative;
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 15px;
-      max-width: 400px;
-      margin: 100px auto;
-      box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
-      text-align: center;
-      border: 2px solid #ff0040;
-    }
-
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #ff0040;
-      margin-bottom: 15px;
-    }
-
-    h1 {
-      font-size: 26px;
-      color: #ff0040;
-    }
-
-    p {
-      font-size: 16px;
-      color: #ddd;
-    }
-
-    .links a {
-      display: inline-block;
-      margin: 10px 5px;
-      padding: 10px 15px;
-      background: #ff0040;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    .links a:hover {
-      background: #ff3355;
+        margin: 0;
+        background: black;
+        overflow: hidden;
+        font-family: 'Courier New', monospace;
     }
 
     canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      pointer-events: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
     }
 
-    #audio-control {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 20;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 10px 15px;
-      border-radius: 10px;
-      color: #ff0040;
-      font-size: 14px;
-      text-align: center;
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
     }
 
-    #playBtn {
-      background: #ff0040;
-      color: white;
-      padding: 8px 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
+    .card {
+        background: rgba(0,0,0,0.7);
+        padding: 20px 40px;
+        border-radius: 15px;
+        border: 2px solid #ff007f;
+        box-shadow: 0 0 20px #ff007f;
+        text-align: center;
+        min-width: 300px;
     }
 
-    #playBtn:hover {
-      background: #ff3355;
+    .title {
+        font-size: 28px;
+        font-weight: bold;
+        color: white;
+        animation: blink 1.5s infinite alternate, moveText 5s linear infinite;
+        white-space: nowrap;
+        overflow: hidden;
+        display: inline-block;
     }
-  </style>
+
+    @keyframes blink {
+        from { opacity: 1; }
+        to { opacity: 0.7; }
+    }
+
+    @keyframes moveText {
+        0% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        100% { transform: translateX(-5px); }
+    }
+
+    .subtitle {
+        color: white;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .links {
+        margin-top: 15px;
+    }
+
+    .links a {
+        background: #ff007f;
+        color: white;
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 8px;
+        margin: 5px;
+        display: inline-block;
+        font-weight: bold;
+        box-shadow: 0 0 10px #ff007f;
+        transition: 0.3s;
+    }
+
+    .links a:hover {
+        background: #ff3399;
+        box-shadow: 0 0 20px #ff33aa;
+    }
+
+    /* Popup hỏi nghe nhạc */
+    .music-prompt {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.85);
+        color: white;
+        padding: 20px 30px;
+        border-radius: 12px;
+        text-align: center;
+        z-index: 9999;
+        box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+    .music-prompt p {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    .music-prompt .buttons button {
+        padding: 8px 16px;
+        margin: 0 5px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    #yesMusic {
+        background: #4CAF50;
+        color: white;
+    }
+    #noMusic {
+        background: #f44336;
+        color: white;
+    }
+</style>
 </head>
 <body>
-  <canvas id="matrix-canvas"></canvas>
 
-  <div class="card">
-    <img src="https://i.imgur.com/X4Y0Os9.png" alt="Avatar" class="avatar" />
-    <h1>Daizylz</h1>
-    <p>Trần Tiến Dũng<br />Hà Nam - Support Facebook<br />Info</p>
-    <div class="links">
-      <a href="https://facebook.com/daizylz.py" target="_blank">Facebook</a>
-      <a href="https://zalo.me/0394778781" target="_blank">Zalo</a>
-      <a href="https://www.instagram.com/dunglatrecon1x/" target="_blank">Ig</a>
-      <a href="https://t.me/daizylz/" target="_blank">Tele</a>
-      <a href="https://i.imgur.com/Y9x0OAv.jpeg" target="_blank">Ngân Hàng</a>
-      <a href="https://yeumoney.com/OQEox" target="_blank">Fake lag Mk 1</a>
-    </div>
+<!-- Popup -->
+<div id="musicPrompt" class="music-prompt">
+  <p>Bạn có muốn nghe nhạc?</p>
+  <div class="buttons">
+    <button id="yesMusic">Có</button>
+    <button id="noMusic">Không</button>
   </div>
-  
-  <iframe 
+</div>
+
+<canvas id="sky"></canvas>
+
+<div class="container">
+    <div class="card">
+        <div class="title">✨ Daizylz ✨</div>
+        <div class="subtitle">Trần Tiến Dũng • Marketing Media • Info</div>
+        <div class="links">
+            <a href="https://facebook.com/daizylz.py" target="_blank">Facebook</a>
+            <a href="https://zalo.me/0394778781" target="_blank">Zalo</a>
+            <a href="https://www.instagram.com/dunglatrecon1x/" target="_blank">Instagram</a>
+            <a href="https://i.imgur.com/Y9x0OAv.jpeg" target="_blank">Banking</a>
+        </div>
+    </div>
+</div>
+
+<iframe 
   id="scplayer"
   width="0" 
   height="0" 
@@ -125,114 +158,96 @@
   src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Ftuki2003%2Fanh-chi-la-nguoi-thay-the-x&color=%23ff0040&auto_play=false&show_comments=false&show_user=false&hide_related=true&show_teaser=false&api=true">
 </iframe>
 
-  <!-- Nút phát nhạc -->
-  <div id="audio-control">
-    Nhạc từ SoundCloud 🎶<br />
-    <button id="playBtn">▶ Bấm để phát nhạc</button>
-  </div>
+<script>
+    const canvas = document.getElementById('sky');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    let stars = [];
+    let meteors = [];
 
-  <script>
-    const iframe = document.getElementById('scplayer');
-    const widget = SC.Widget(iframe);
+    function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
 
-    document.getElementById("playBtn").addEventListener("click", () => {
-      widget.play();
-    });
-  </script>
-
-  <script>
-    const canvas = document.getElementById("matrix-canvas");
-    const ctx = canvas.getContext("2d");
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const pythonCode = "def hack_facebook(): return 'Unlocked' while True: print('Daizylz')".split("");
-
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-
-    function drawMatrix() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      const colors = ["#ff0040", "#00ffee", "#ff4400", "#ff0077"];
-      ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = pythonCode[Math.floor(Math.random() * pythonCode.length)];
-        ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-
-        drops[i]++;
-      }
+    function random(min, max) {
+        return Math.random() * (max - min) + min;
     }
 
-    setInterval(drawMatrix, 40);
-
-    // Mouse trail particles
-    const particles = [];
-
-    class Particle {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = Math.random() * 2 - 1;
-        this.speedY = Math.random() * 2 - 1;
-        this.alpha = 1;
-        this.color = ["#ff0040", "#00ffee", "#ff4400"][Math.floor(Math.random() * 3)];
-      }
-
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.alpha -= 0.05;
-      }
-
-      draw() {
-        ctx.globalAlpha = this.alpha * 0.3;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
+    for (let i = 0; i < 150; i++) {
+        stars.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            radius: Math.random() * 1.5,
+            alpha: random(0.5, 1),
+            alphaChange: random(0.002, 0.005)
+        });
     }
 
-    function handleParticles() {
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-        if (particles[i].alpha <= 0) {
-          particles.splice(i, 1);
-          i--;
-        }
-      }
+    function createMeteor() {
+        meteors.push({
+            x: Math.random() * w,
+            y: Math.random() * h ,
+            length: random(100, 200),
+            speed: random(5, 8),
+            opacity: 1
+        });
     }
+    setInterval(createMeteor, 800);
+    
+    function draw() {
+        ctx.clearRect(0, 0, w, h);
 
-    function animateParticles() {
-      handleParticles();
-      requestAnimationFrame(animateParticles);
+        ctx.fillStyle = "white";
+        stars.forEach(s => {
+            ctx.globalAlpha = s.alpha;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            s.alpha += s.alphaChange;
+            if (s.alpha <= 0.3 || s.alpha >= 1) s.alphaChange *= -1;
+        });
+
+        meteors.forEach((m, index) => {
+            const grad = ctx.createLinearGradient(m.x, m.y, m.x - m.length, m.y + m.length);
+            grad.addColorStop(0, `rgba(255,255,255,${m.opacity})`);
+            grad.addColorStop(1, "transparent");
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(m.x, m.y);
+            ctx.lineTo(m.x - m.length, m.y + m.length);
+            ctx.stroke();
+
+            m.x += m.speed;
+            m.y -= m.speed;
+            m.opacity -= 0.02;
+
+            if (m.opacity <= 0) meteors.splice(index, 1);
+        });
+
+        requestAnimationFrame(draw);
     }
+    draw();
 
-    animateParticles();
+    // Điều khiển popup nghe nhạc
+    const musicPrompt = document.getElementById("musicPrompt");
+    const yesBtn = document.getElementById("yesMusic");
+    const noBtn = document.getElementById("noMusic");
+    const scPlayer = document.getElementById("scplayer");
 
-    window.addEventListener("mousemove", (e) => {
-      for (let i = 0; i < 2; i++) {
-        particles.push(new Particle(e.x, e.y));
-      }
+    yesBtn.addEventListener("click", () => {
+        scPlayer.src = scPlayer.src.replace("auto_play=false", "auto_play=true");
+        musicPrompt.style.display = "none";
     });
 
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    noBtn.addEventListener("click", () => {
+        musicPrompt.style.display = "none";
     });
-  </script>
+</script>
+
 </body>
 </html>
