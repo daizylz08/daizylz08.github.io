@@ -75,7 +75,6 @@
         background: #ff3399;
         box-shadow: 0 0 20px #ff33aa;
     }
-    /* Popup hỏi nghe nhạc */
     .music-popup {
         position: fixed;
         top: 50%;
@@ -103,6 +102,13 @@
     .music-popup button:hover {
         background: #ff3399;
     }
+    #scplayer {
+        display: none;
+        width: 100%;
+        height: 120px;
+        border: none;
+        margin-top: 15px;
+    }
 </style>
 </head>
 <body>
@@ -119,38 +125,30 @@
             <a href="https://www.instagram.com/dunglatrecon1x/" target="_blank">Instagram</a>
             <a href="https://i.imgur.com/Y9x0OAv.jpeg" target="_blank">Banking</a>
         </div>
+        <iframe id="scplayer" allow="autoplay"></iframe>
     </div>
 </div>
 
-<!-- Popup hỏi nghe nhạc -->
 <div class="music-popup" id="musicPopup">
     <p>Bạn có muốn nghe nhạc?</p>
     <button onclick="playRandomSong()">Có</button>
     <button onclick="closePopup()">Không</button>
 </div>
 
-<iframe 
-  id="scplayer"
-  width="0" 
-  height="0" 
-  scrolling="no" 
-  frameborder="no" 
-  allow="autoplay">
-</iframe>
-
 <script>
     const songs = [
-        "https://soundcloud.com/ggehe-eheheg/ne-u-ta-ngu-o-c-lo-i-remix?si=5aac4bc1e624445fa0ca25c66d0a27f9&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
-        "https://soundcloud.com/lun-nhok-779153574/m-c-v-n-quy-k-remix-full?in=thanh-trung-544708901/sets/nh-c-trung-remix&si=c12691978c0941959a115b893b986d33&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
-        "https://soundcloud.com/cao-thanh-giau/l-anh-ng-nh-n-remix-trung-dio?si=ead1d4094c3d4e89b2036689012d5b26&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
-        "https://soundcloud.com/tr-n-v-n-i-707758371/co-ay-mat-uot-le-nhoa-houselak?si=f87ad5bf7c2c45f18929b7e930c90dc3&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
-        "https://soundcloud.com/i-v-n-28451425/ch-ng-ai-hi-u-v-t-nh-y-u?si=e940b28194634102b47e1272a3ff879d&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+        "https://soundcloud.com/ggehe-eheheg/ne-u-ta-ngu-o-c-lo-i-remix",
+        "https://soundcloud.com/lun-nhok-779153574/m-c-v-n-quy-k-remix-full",
+        "https://soundcloud.com/cao-thanh-giau/l-anh-ng-nh-n-remix-trung-dio",
+        "https://soundcloud.com/tr-n-v-n-i-707758371/co-ay-mat-uot-le-nhoa-houselak",
+        "https://soundcloud.com/i-v-n-28451425/ch-ng-ai-hi-u-v-t-nh-y-u"
     ];
 
     function playRandomSong() {
         const randomIndex = Math.floor(Math.random() * songs.length);
         const iframe = document.getElementById('scplayer');
-        iframe.src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(songs[randomIndex])}&color=%23ff0040&auto_play=true&show_comments=false&show_user=false&hide_related=true&show_teaser=false&api=true`;
+        iframe.style.display = 'block';
+        iframe.src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(songs[randomIndex])}&color=%23ff0040&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false`;
         document.getElementById('musicPopup').style.display = 'none';
     }
 
@@ -158,45 +156,24 @@
         document.getElementById('musicPopup').style.display = 'none';
     }
 
-    // Bầu trời + sao băng
+    // hiệu ứng nền
     const canvas = document.getElementById('sky');
     const ctx = canvas.getContext('2d');
-    let w, h;
-    let stars = [];
-    let meteors = [];
-
+    let w, h, stars = [], meteors = [];
     function resize() {
         w = canvas.width = window.innerWidth;
         h = canvas.height = window.innerHeight;
     }
     window.addEventListener('resize', resize);
     resize();
-
-    function random(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
+    function random(min, max) { return Math.random() * (max - min) + min; }
     for (let i = 0; i < 150; i++) {
-        stars.push({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            radius: Math.random() * 1.5,
-            alpha: random(0.5, 1),
-            alphaChange: random(0.002, 0.005)
-        });
+        stars.push({x: Math.random() * w, y: Math.random() * h, radius: Math.random() * 1.5, alpha: random(0.5, 1), alphaChange: random(0.002, 0.005)});
     }
-
     function createMeteor() {
-        meteors.push({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            length: random(50, 120),
-            speed: random(5, 8),
-            opacity: 1
-        });
+        meteors.push({x: Math.random() * w, y: Math.random() * h, length: random(50, 120), speed: random(5, 8), opacity: 1});
     }
     setInterval(createMeteor, 800);
-
     function draw() {
         ctx.clearRect(0, 0, w, h);
         ctx.fillStyle = "white";
