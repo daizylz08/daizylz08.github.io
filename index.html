@@ -1,209 +1,255 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daizylz</title>
-<style>
-    body {
-        margin: 0;
-        background: black;
-        overflow: hidden;
-        font-family: 'Courier New', monospace;
-    }
-    canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -1;
-    }
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-    }
-    .card {
-        background: rgba(0,0,0,0.7);
-        padding: 20px 40px;
-        border-radius: 15px;
-        border: 2px solid #ff007f;
-        box-shadow: 0 0 20px #ff007f;
-        text-align: center;
-        min-width: 300px;
-    }
-    .title {
-        font-size: 28px;
-        font-weight: bold;
-        color: white;
-        animation: blink 1.5s infinite alternate, moveText 5s linear infinite;
-        white-space: nowrap;
-        overflow: hidden;
-        display: inline-block;
-    }
-    @keyframes blink {
-        from { opacity: 1; }
-        to { opacity: 0.7; }
-    }
-    @keyframes moveText {
-        0% { transform: translateX(-5px); }
-        50% { transform: translateX(5px); }
-        100% { transform: translateX(-5px); }
-    }
-    .subtitle {
-        color: white;
-        font-size: 14px;
-        margin-top: 5px;
-    }
-    .links {
-        margin-top: 15px;
-    }
-    .links a {
-        background: #ff007f;
-        color: white;
-        text-decoration: none;
-        padding: 8px 15px;
-        border-radius: 8px;
-        margin: 5px;
-        display: inline-block;
-        font-weight: bold;
-        box-shadow: 0 0 10px #ff007f;
-        transition: 0.3s;
-    }
-    .links a:hover {
-        background: #ff3399;
-        box-shadow: 0 0 20px #ff33aa;
-    }
-    .music-popup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0,0,0,0.85);
-        padding: 20px 30px;
-        border: 2px solid #ff007f;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 0 15px #ff007f;
-        z-index: 1000;
-        color: white;
-    }
-    .music-popup button {
-        background: #ff007f;
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        margin: 5px;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-    .music-popup button:hover {
-        background: #ff3399;
-    }
-    #scplayer {
-        display: none;
-        width: 100%;
-        height: 120px;
-        border: none;
-        margin-top: 15px;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daizylz</title>
+    <style>
+        body {
+            margin: 0;
+            background: black;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+        }
+        
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        
+        .card {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 40px;
+            border-radius: 15px;
+            border: 2px solid #ff007f;
+            box-shadow: 0 0 20px #ff007f;
+            text-align: center;
+            min-width: 300px;
+        }
+        
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            animation: blink 1.5s infinite alternate, moveText 5s linear infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        @keyframes blink {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0.7;
+            }
+        }
+        
+        @keyframes moveText {
+            0% {
+                transform: translateX(-5px);
+            }
+            50% {
+                transform: translateX(5px);
+            }
+            100% {
+                transform: translateX(-5px);
+            }
+        }
+        
+        .subtitle {
+            color: white;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .links {
+            margin-top: 15px;
+        }
+        
+        .links a {
+            background: #ff007f;
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            margin: 5px;
+            display: inline-block;
+            font-weight: bold;
+            box-shadow: 0 0 10px #ff007f;
+            transition: 0.3s;
+        }
+        
+        .links a:hover {
+            background: #ff3399;
+            box-shadow: 0 0 20px #ff33aa;
+        }
+        
+        .music-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.85);
+            padding: 20px 30px;
+            border: 2px solid #ff007f;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 15px #ff007f;
+            z-index: 1000;
+            color: white;
+        }
+        
+        .music-popup button {
+            background: #ff007f;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .music-popup button:hover {
+            background: #ff3399;
+        }
+        
+        #scplayer {
+            display: none;
+            width: 100%;
+            height: 120px;
+            border: none;
+            margin-top: 15px;
+        }
+    </style>
 </head>
+
 <body>
 
-<canvas id="sky"></canvas>
+    <canvas id="sky"></canvas>
 
-<div class="container">
-    <div class="card">
-        <div class="title">✨ Daizylz ✨</div>
-        <div class="subtitle">Trần Tiến Dũng • Marketing Media • Info</div>
-        <div class="links">
-            <a href="https://facebook.com/daizylz.py" target="_blank">Facebook</a>
-            <a href="https://zalo.me/0394778781" target="_blank">Zalo</a>
-            <a href="https://www.instagram.com/dunglatrecon1x/" target="_blank">Instagram</a>
-            <a href="https://i.imgur.com/Y9x0OAv.jpeg" target="_blank">Banking</a>
+    <div class="container">
+        <div class="card">
+            <div class="title">✨ Daizylz ✨</div>
+            <div class="subtitle">Trần Tiến Dũng • Marketing Media • Info</div>
+            <div class="links">
+                <a href="https://facebook.com/daizylz.py" target="_blank">Facebook</a>
+                <a href="https://zalo.me/0394778781" target="_blank">Zalo</a>
+                <a href="https://t.me/Daizylz" target="_blank">Telegram</a>
+                <a href="https://www.mediafire.com/file/trc0i5h5mhmuwnq/Locket_Gold_update.apk/file" target="_blank">Cập nhật Locket Gold Android</a>
+            </div>
+            <iframe id="scplayer" allow="autoplay"></iframe>
         </div>
-        <iframe id="scplayer" allow="autoplay"></iframe>
     </div>
-</div>
 
-<div class="music-popup" id="musicPopup">
-    <p>Bạn có muốn nghe nhạc?</p>
-    <button onclick="playRandomSong()">Có</button>
-    <button onclick="closePopup()">Không</button>
-</div>
+    <div class="music-popup" id="musicPopup">
+        <p>Bạn có muốn nghe nhạc?</p>
+        <button onclick="playRandomSong()">Có</button>
+        <button onclick="closePopup()">Không</button>
+    </div>
 
-<script>
-    const songs = [
-        "https://soundcloud.com/ggehe-eheheg/ne-u-ta-ngu-o-c-lo-i-remix",
-        "https://soundcloud.com/lun-nhok-779153574/m-c-v-n-quy-k-remix-full",
-        "https://soundcloud.com/cao-thanh-giau/l-anh-ng-nh-n-remix-trung-dio",
-        "https://soundcloud.com/tr-n-v-n-i-707758371/co-ay-mat-uot-le-nhoa-houselak",
-        "https://soundcloud.com/i-v-n-28451425/ch-ng-ai-hi-u-v-t-nh-y-u"
-    ];
+    <script>
+        const songs = [
+            "https://soundcloud.com/ggehe-eheheg/ne-u-ta-ngu-o-c-lo-i-remix",
+            "https://soundcloud.com/lun-nhok-779153574/m-c-v-n-quy-k-remix-full",
+            "https://soundcloud.com/v-ho-ng-418813355/ch-ng-h-p-nhau-u-remix-vuz?si",
+            "https://soundcloud.com/tr-n-v-n-i-707758371/co-ay-mat-uot-le-nhoa-houselak",
+            "https://soundcloud.com/i-v-n-28451425/ch-ng-ai-hi-u-v-t-nh-y-u"
+        ];
 
-    function playRandomSong() {
-        const randomIndex = Math.floor(Math.random() * songs.length);
-        const iframe = document.getElementById('scplayer');
-        iframe.style.display = 'block';
-        iframe.src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(songs[randomIndex])}&color=%23ff0040&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false`;
-        document.getElementById('musicPopup').style.display = 'none';
-    }
+        function playRandomSong() {
+            const randomIndex = Math.floor(Math.random() * songs.length);
+            const iframe = document.getElementById('scplayer');
+            iframe.style.display = 'block';
+            iframe.src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(songs[randomIndex])}&color=%23ff0040&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false`;
+            document.getElementById('musicPopup').style.display = 'none';
+        }
 
-    function closePopup() {
-        document.getElementById('musicPopup').style.display = 'none';
-    }
+        function closePopup() {
+            document.getElementById('musicPopup').style.display = 'none';
+        }
 
-    // hiệu ứng nền
-    const canvas = document.getElementById('sky');
-    const ctx = canvas.getContext('2d');
-    let w, h, stars = [], meteors = [];
-    function resize() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-    function random(min, max) { return Math.random() * (max - min) + min; }
-    for (let i = 0; i < 150; i++) {
-        stars.push({x: Math.random() * w, y: Math.random() * h, radius: Math.random() * 1.5, alpha: random(0.5, 1), alphaChange: random(0.002, 0.005)});
-    }
-    function createMeteor() {
-        meteors.push({x: Math.random() * w, y: Math.random() * h, length: random(50, 120), speed: random(5, 8), opacity: 1});
-    }
-    setInterval(createMeteor, 800);
-    function draw() {
-        ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = "white";
-        stars.forEach(s => {
-            ctx.globalAlpha = s.alpha;
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-            ctx.fill();
-            s.alpha += s.alphaChange;
-            if (s.alpha <= 0.3 || s.alpha >= 1) s.alphaChange *= -1;
-        });
-        meteors.forEach((m, index) => {
-            const grad = ctx.createLinearGradient(m.x, m.y, m.x - m.length, m.y + m.length);
-            grad.addColorStop(0, `rgba(255,255,255,${m.opacity})`);
-            grad.addColorStop(1, "transparent");
-            ctx.strokeStyle = grad;
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(m.x, m.y);
-            ctx.lineTo(m.x - m.length, m.y + m.length);
-            ctx.stroke();
-            m.x += m.speed;
-            m.y -= m.speed;
-            m.opacity -= 0.02;
-            if (m.opacity <= 0) meteors.splice(index, 1);
-        });
-        requestAnimationFrame(draw);
-    }
-    draw();
-</script>
+        // hiệu ứng nền
+        const canvas = document.getElementById('sky');
+        const ctx = canvas.getContext('2d');
+        let w, h, stars = [],
+            meteors = [];
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+        for (let i = 0; i < 150; i++) {
+            stars.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                radius: Math.random() * 1.5,
+                alpha: random(0.5, 1),
+                alphaChange: random(0.002, 0.005)
+            });
+        }
+
+        function createMeteor() {
+            meteors.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                length: random(50, 120),
+                speed: random(5, 8),
+                opacity: 1
+            });
+        }
+        setInterval(createMeteor, 800);
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            ctx.fillStyle = "white";
+            stars.forEach(s => {
+                ctx.globalAlpha = s.alpha;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+                ctx.fill();
+                s.alpha += s.alphaChange;
+                if (s.alpha <= 0.3 || s.alpha >= 1) s.alphaChange *= -1;
+            });
+            meteors.forEach((m, index) => {
+                const grad = ctx.createLinearGradient(m.x, m.y, m.x - m.length, m.y + m.length);
+                grad.addColorStop(0, `rgba(255,255,255,${m.opacity})`);
+                grad.addColorStop(1, "transparent");
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(m.x, m.y);
+                ctx.lineTo(m.x - m.length, m.y + m.length);
+                ctx.stroke();
+                m.x += m.speed;
+                m.y -= m.speed;
+                m.opacity -= 0.02;
+                if (m.opacity <= 0) meteors.splice(index, 1);
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
 
 </body>
+
 </html>
