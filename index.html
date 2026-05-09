@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daizylz</title>
+
     <style>
         body {
             margin: 0;
@@ -12,127 +13,134 @@
             overflow: hidden;
             font-family: 'Courier New', monospace;
         }
-        
+
         canvas {
             position: fixed;
             top: 0;
             left: 0;
             z-index: -1;
         }
-        
+
         .container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
+            padding: 20px;
         }
-        
+
         .card {
             background: rgba(0, 0, 0, 0.7);
-            padding: 20px 40px;
-            border-radius: 15px;
             border: 2px solid #ff007f;
-            box-shadow: 0 0 20px #ff007f;
+            box-shadow: 0 0 25px #ff007f;
+            border-radius: 20px;
+            padding: 30px;
             text-align: center;
-            min-width: 300px;
+            width: 100%;
+            max-width: 600px;
         }
-        
+
         .title {
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 40px;
             color: white;
-            animation: blink 1.5s infinite alternate, moveText 5s linear infinite;
-            white-space: nowrap;
-            overflow: hidden;
-            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            animation: glow 2s infinite alternate;
         }
-        
-        @keyframes blink {
+
+        @keyframes glow {
             from {
-                opacity: 1;
+                text-shadow: 0 0 10px #ff007f;
             }
+
             to {
-                opacity: 0.7;
+                text-shadow: 0 0 25px #ff33aa;
             }
         }
-        
-        @keyframes moveText {
-            0% {
-                transform: translateX(-5px);
-            }
-            50% {
-                transform: translateX(5px);
-            }
-            100% {
-                transform: translateX(-5px);
-            }
-        }
-        
+
         .subtitle {
             color: white;
-            font-size: 14px;
-            margin-top: 5px;
+            margin-bottom: 20px;
+            font-size: 15px;
         }
-        
+
         .links {
-            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
         }
-        
+
         .links a {
+            text-decoration: none;
             background: #ff007f;
             color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            margin: 5px;
-            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px;
             font-weight: bold;
-            box-shadow: 0 0 10px #ff007f;
             transition: 0.3s;
+            box-shadow: 0 0 10px #ff007f;
         }
-        
+
         .links a:hover {
             background: #ff3399;
+            transform: scale(1.05);
             box-shadow: 0 0 20px #ff33aa;
         }
-        
+
         .music-popup {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.85);
-            padding: 20px 30px;
+            background: rgba(0, 0, 0, 0.9);
             border: 2px solid #ff007f;
-            border-radius: 10px;
+            border-radius: 15px;
+            padding: 25px;
             text-align: center;
-            box-shadow: 0 0 15px #ff007f;
-            z-index: 1000;
             color: white;
+            z-index: 1000;
+            box-shadow: 0 0 20px #ff007f;
         }
-        
+
         .music-popup button {
             background: #ff007f;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 10px 18px;
             margin: 5px;
-            border-radius: 5px;
-            font-weight: bold;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
         }
-        
+
         .music-popup button:hover {
             background: #ff3399;
         }
-        
+
         #scplayer {
             display: none;
             width: 100%;
             height: 120px;
             border: none;
+            border-radius: 10px;
             margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .title {
+                font-size: 30px;
+            }
+
+            .subtitle {
+                font-size: 13px;
+            }
+
+            .links a {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -143,25 +151,50 @@
 
     <div class="container">
         <div class="card">
+
             <div class="title">✨ Daizylz ✨</div>
-            <div class="subtitle">Trần Tiến Dũng • Coder Website • My Profiles</div>
-            <div class="links"
-                <a href="https://www.tiktok.com/@_tdungs" target="_blank">Tiktok</a>
-                <a href="https://zalo.me/0394778781" target="_blank">Zalo</a>
-                <a href="https://www.instagram.com/ig_tdung208/" target="_blank">Instagram<a/>
-                <a href="https://facebook.com/daizylz.py" target="_blank">Facebook</a>
+
+            <div class="subtitle">
+                Trần Tiến Dũng • Coder Website • My Profiles
             </div>
+
+            <div class="links">
+                <a href="https://www.tiktok.com/@_tdungs" target="_blank">
+                    TikTok
+                </a>
+
+                <a href="https://zalo.me/0394778781" target="_blank">
+                    Zalo
+                </a>
+
+                <a href="https://www.instagram.com/ig_tdung208/" target="_blank">
+                    Instagram
+                </a>
+
+                <a href="https://facebook.com/daizylz.py" target="_blank">
+                    Facebook
+                </a>
+            </div>
+
             <iframe id="scplayer" allow="autoplay"></iframe>
+
         </div>
     </div>
 
     <div class="music-popup" id="musicPopup">
         <p>Playing Music?</p>
-        <button onclick="playRandomSong()">Yes</button>
-        <button onclick="closePopup()">No</button>
+
+        <button onclick="playRandomSong()">
+            Yes
+        </button>
+
+        <button onclick="closePopup()">
+            No
+        </button>
     </div>
 
     <script>
+
         const songs = [
             "https://soundcloud.com/ggehe-eheheg/ne-u-ta-ngu-o-c-lo-i-remix",
             "https://soundcloud.com/lun-nhok-779153574/m-c-v-n-quy-k-remix-full",
@@ -171,10 +204,16 @@
         ];
 
         function playRandomSong() {
+
             const randomIndex = Math.floor(Math.random() * songs.length);
+
             const iframe = document.getElementById('scplayer');
+
             iframe.style.display = 'block';
-            iframe.src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(songs[randomIndex])}&color=%23ff0040&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false`;
+
+            iframe.src =
+                `https://w.soundcloud.com/player/?url=${encodeURIComponent(songs[randomIndex])}&color=%23ff007f&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false`;
+
             document.getElementById('musicPopup').style.display = 'none';
         }
 
@@ -182,33 +221,41 @@
             document.getElementById('musicPopup').style.display = 'none';
         }
 
-        // hiệu ứng nền
+        // background effect
         const canvas = document.getElementById('sky');
         const ctx = canvas.getContext('2d');
-        let w, h, stars = [],
-            meteors = [];
+
+        let w, h;
+        let stars = [];
+        let meteors = [];
 
         function resize() {
             w = canvas.width = window.innerWidth;
             h = canvas.height = window.innerHeight;
         }
-        window.addEventListener('resize', resize);
+
         resize();
+
+        window.addEventListener('resize', resize);
 
         function random(min, max) {
             return Math.random() * (max - min) + min;
         }
+
         for (let i = 0; i < 150; i++) {
+
             stars.push({
                 x: Math.random() * w,
                 y: Math.random() * h,
                 radius: Math.random() * 1.5,
-                alpha: random(0.5, 1),
+                alpha: random(0.3, 1),
                 alphaChange: random(0.002, 0.005)
             });
+
         }
 
         function createMeteor() {
+
             meteors.push({
                 x: Math.random() * w,
                 y: Math.random() * h,
@@ -216,51 +263,89 @@
                 speed: random(5, 8),
                 opacity: 1
             });
+
         }
+
         setInterval(createMeteor, 800);
 
         function draw() {
+
             ctx.clearRect(0, 0, w, h);
+
             ctx.fillStyle = "white";
-            stars.forEach(s => {
-                ctx.globalAlpha = s.alpha;
+
+            stars.forEach(star => {
+
+                ctx.globalAlpha = star.alpha;
+
                 ctx.beginPath();
-                ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+
+                ctx.arc(
+                    star.x,
+                    star.y,
+                    star.radius,
+                    0,
+                    Math.PI * 2
+                );
+
                 ctx.fill();
-                s.alpha += s.alphaChange;
-                if (s.alpha <= 0.3 || s.alpha >= 1) s.alphaChange *= -1;
+
+                star.alpha += star.alphaChange;
+
+                if (star.alpha <= 0.3 || star.alpha >= 1) {
+                    star.alphaChange *= -1;
+                }
+
             });
-            meteors.forEach((m, index) => {
-                const grad = ctx.createLinearGradient(m.x, m.y, m.x - m.length, m.y + m.length);
-                grad.addColorStop(0, `rgba(255,255,255,${m.opacity})`);
-                grad.addColorStop(1, "transparent");
-                ctx.strokeStyle = grad;
+
+            meteors.forEach((meteor, index) => {
+
+                const gradient = ctx.createLinearGradient(
+                    meteor.x,
+                    meteor.y,
+                    meteor.x - meteor.length,
+                    meteor.y + meteor.length
+                );
+
+                gradient.addColorStop(
+                    0,
+                    `rgba(255,255,255,${meteor.opacity})`
+                );
+
+                gradient.addColorStop(1, 'transparent');
+
+                ctx.strokeStyle = gradient;
+
                 ctx.lineWidth = 2;
+
                 ctx.beginPath();
-                ctx.moveTo(m.x, m.y);
-                ctx.lineTo(m.x - m.length, m.y + m.length);
+
+                ctx.moveTo(meteor.x, meteor.y);
+
+                ctx.lineTo(
+                    meteor.x - meteor.length,
+                    meteor.y + meteor.length
+                );
+
                 ctx.stroke();
-                m.x += m.speed;
-                m.y -= m.speed;
-                m.opacity -= 0.02;
-                if (m.opacity <= 0) meteors.splice(index, 1);
+
+                meteor.x += meteor.speed;
+                meteor.y -= meteor.speed;
+                meteor.opacity -= 0.02;
+
+                if (meteor.opacity <= 0) {
+                    meteors.splice(index, 1);
+                }
+
             });
+
             requestAnimationFrame(draw);
         }
+
         draw();
+
     </script>
 
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
